@@ -109,17 +109,21 @@ public class Double_LinkedList implements ILinkedList {
     }
 
 
-    public Double_LinkedList sublist(int fromIndex1, int toIndex1){
-        int fromIndex=fromIndex1+1;
-        int toIndex=toIndex1+1;
-       Double_LinkedList x=new Double_LinkedList();
-        Double_Node temp=head;
-        if(toIndex>this.size()){throw new NullPointerException("wrong interval");}
-        for(int i=1;i<=toIndex;i++){
-            if(fromIndex<=i){
-                x.add(temp.val);
+    public Double_LinkedList sublist(int fromIndex, int toIndex){
+        if((fromIndex>this.size())||(toIndex>this.size())||(fromIndex<0)||(toIndex<0)){throw new NullPointerException("Wrong interval");}
+        Double_LinkedList x=new Double_LinkedList();
+        if(fromIndex<=toIndex) {
+            int y=fromIndex;
+            for (int i = 0; i <= (toIndex - fromIndex); i++) {
+                x.add(this.get(y));
+                y++;
             }
-            temp=temp.next;
+        }
+        if(fromIndex>toIndex){
+            int y=fromIndex;
+            for(int i=0;i<=fromIndex-toIndex;i++){
+                x.add(this.get(y));
+                y--;}
         }
         return x;
     }
@@ -141,12 +145,12 @@ public class Double_LinkedList implements ILinkedList {
 
     public void print_LinkedList(){
         Double_Node temp=head;
-        while (temp.next!=null){
+        while (temp!=null){
             System.out.println(temp.val);
-            temp=temp.next;
             if(temp.next==null){
-                System.out.println(temp.val);
+                break;
             }
+            else { temp=temp.next;}
         }
     }
 
