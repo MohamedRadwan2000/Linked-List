@@ -89,7 +89,8 @@ public class Single_LinkedList implements ILinkedList {
     else {return true;}}
 
 
-    public void remove(int index){
+    public void remove(int index1){
+        int index=index1+1;
         Node temp=head;
         if(index>0){
             if(index==1){head=head.next;}
@@ -118,17 +119,21 @@ public class Single_LinkedList implements ILinkedList {
 
 
 
-    public Single_LinkedList sublist(int fromIndex1, int toIndex1){
-        int fromIndex=fromIndex1+1;
-        int toIndex=toIndex1+1;
+    public Single_LinkedList sublist(int fromIndex, int toIndex){
+        if((fromIndex>this.size())||(toIndex>this.size())||(fromIndex<0)||(toIndex<0)){throw new NullPointerException("Wrong interval");}
         Single_LinkedList x=new Single_LinkedList();
-        Node temp=head;
-        if(toIndex>this.size()){throw new NullPointerException("wrong interval");}
-        for(int i=1;i<=toIndex;i++){
-            if(fromIndex<=i){
-               x.add(temp.val);
+        if(fromIndex<=toIndex) {
+            int y=fromIndex;
+            for (int i = 0; i <= (toIndex - fromIndex); i++) {
+                x.add(this.get(y));
+                y++;
             }
-            temp=temp.next;
+        }
+        if(fromIndex>toIndex){
+            int y=fromIndex;
+            for(int i=0;i<=fromIndex-toIndex;i++){
+                x.add(this.get(y));
+            y--;}
         }
         return x;
     }
@@ -146,12 +151,12 @@ public class Single_LinkedList implements ILinkedList {
     }
     public void print_LinkedList(){
         Node temp=head;
-        while (temp.next!=null){
+        while (temp!=null){
             System.out.println(temp.val);
-            temp=temp.next;
             if(temp.next==null){
-                System.out.println(temp.val);
+            break;
             }
+            else { temp=temp.next;}
         }
     }
 
